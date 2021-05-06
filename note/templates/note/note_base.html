@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu</title>
+</head>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{%static 'style/note_base.css'%}"/>
+<link rel="stylesheet" type="text/css" href="{%static 'style/delete_confirmation.css'%}"/>
+<link rel="stylesheet" type="text/css" href="{%static 'style/note_form.css'%}"/>
+<link rel="stylesheet" type="text/css" href="{%static 'style/note_view.css'%}"/>
+<link rel="stylesheet" type="text/css" href="{%static 'style/note_list.css'%}"/>
+<body>
+    <nav class="navbar is-dark">
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                {% if request.get_full_path == "/" %}
+                    <a id="new_note" href="{% url 'create' %}" class="navbar-item">New Note</a>
+                {% else %}
+                    <a id="return" href="{% url 'view' %}" class="navbar-item">Go Back</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+        {% for m in messages %}
+            {% if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                 <div id="success" class="alert alert-success" role="alert" >
+                    <center><strong><p>{{ m }}</p></strong></center>
+                 </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert" >
+                    <center><strong><p>{{ m }}</p></strong></center>
+                 </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <section class="section">
+        {% block note_list %}{% endblock %}
+        {% block note_view %}{% endblock %}
+        <div class="column is-10">
+            {% block note_form %}{% endblock %}
+        </div>
+    </section>
+</body>
+</html>

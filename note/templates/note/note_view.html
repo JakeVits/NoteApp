@@ -1,0 +1,13 @@
+{% extends "note/note_base.html" %}
+{% block note_view %}
+    {% if user_view %}
+        {% for i in user_view %}
+            <div id="noteview_background">
+                <h1 id="my_title">{{ i.title }}</h1>
+                <p class="c_date"><strong class="cdate">Creation Date</strong>: {{ i.created_at }}</p>
+                <p class="m_date"><strong class="mdate">Modification Date</strong>: {{ i.modified_at }}</p>
+                <p class="note_body"><strong class="notebody">Context:</strong> {{ i.context }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+#view{
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    float: left;
+    margin-left: 5%;
+}
+#edit{
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 20px;
+    float: left;
+    margin-left: 3%;
+}
+#delete{
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    float: left;
+    margin-left: 3%;
+}
+#delete:hover{
+    background-color: rgb(255, 0, 0);
+}
+#view:hover{
+    background-color: #008B8B;
+}
+#edit:hover{
+    background-color: #00008B;
+}
+#empty_note{
+    padding-left: 30%;
+    letter-spacing: 4px;
+    padding-top: 5%;
+    color: white;
+    font-family: 'Courgette', cursive;
+}
+#note_background{
+    width: 300px;
+    height: 250px;
+    background-color: black;
+    border-radius: 10px 10px 30px 30px;
+    opacity: 0.8;
+    margin-left: 15%;
+    margin-top: 10%;
+}
+#grid_container{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+.col{
+    margin-left: -14.5%;
+}
+#title_list{
+    color: white;
+    opacity: 0.8;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top: 3%;
+    background: #FF4500;
+    padding-bottom: 3%;
+    border-radius: 10px 10px 0px 0px;
+}
+#title_list:hover{
+    text-decoration: none;
+}

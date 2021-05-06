@@ -1,0 +1,26 @@
+{% extends "note/note_base.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{%static 'style/note_list.css'%}"/>
+{% block note_list %}
+    {% if note_list %}
+            <div class="container">
+                <div class="row">
+                    <div id="grid_container" class="col">
+                        {% for note in note_list %}
+                            <div id="note_background">
+                                <h4 id="title_list">{{ note.title }}</h4>
+            <!--                        <strong id="title_list">{{note.title}}</strong>-->
+                                <div class="my_button">
+                                    <a href="{% url 'view' note.title %}" id="view">View</a>
+                                    <a href="{% url 'update' note.title %}" id="edit">Update</a>
+                                    <a href="{% url 'delete' note.title %}" id="delete">Delete</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    {% elif not note_list and request.get_full_path == "/" %}
+        <h3 id="empty_note">No Note is Available in the Moment!</h3>
+    {% endif %}
+{% endblock %}
