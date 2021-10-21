@@ -9,7 +9,6 @@
                         {% for note in note_list %}
                             <div id="note_background">
                                 <h4 id="title_list">{{ note.title }}</h4>
-            <!--                        <strong id="title_list">{{note.title}}</strong>-->
                                 <div class="my_button">
                                     <a href="{% url 'view' note.title %}" id="view">View</a>
                                     <a href="{% url 'update' note.title %}" id="edit">Update</a>

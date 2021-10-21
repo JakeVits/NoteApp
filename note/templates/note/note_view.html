@@ -1,5 +1,8 @@
 {% extends "note/note_base.html" %}
 {% block note_view %}
+    {% if text %}
+        {{ text }}
+    {% endif %}
     {% if user_view %}
         {% for i in user_view %}
             <div id="noteview_background">
