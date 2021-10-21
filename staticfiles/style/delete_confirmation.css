@@ -1,0 +1,34 @@
+
+#title_delete{
+    color: white;
+    letter-spacing: 2px;
+    padding-left: 40%;
+    margin-top: 10%;
+}
+#cancel{
+    color: white;
+    border-radius: 5px;
+    padding: 11px 20px;
+    margin-left: 54%;
+    background: blue;
+}
+#con_delete{
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 3%;
+    border: 0;
+    color: white;
+    background: #DC143C;
+}
+#cancel:hover{
+    background-color: rgb(61, 43, 190);
+}
+#con_delete:hover{
+    background-color: rgb(255, 0, 0);
+    color: white;
+    cursor: pointer;
+}
+.option{
+    padding-top: 2%;
+}
