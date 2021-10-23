@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'Optional Default Key')
+SECRET_KEY = ')0v4aeey+lg-9%vc)0ds4urfmna$n(lezu83jw0)7301z!)qah'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['svengates-noteapp.herokuapp.com', '127.0.0.1']
 
@@ -80,15 +80,15 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'Default DB name'),
-        'USER': os.getenv('DB_USER', 'Default DB user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Default DB password'),
-        'HOST': os.getenv('DB_HOST', 'Default DB host'),
-        'PORT': os.getenv('DB_PORT', 'Default DB port'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dc9idqlnpgggho',
+        "USER": 'ypusodnstircgr',
+        "PASSWORD": 'd0fa6b6d67fc40da942ca0d82cade0b137ee33cb4796df586f80c80625a94a96',
+        "HOST": 'ec2-54-217-15-9.eu-west-1.compute.amazonaws.com',
+        "PORT": 5432
     }
 }
-
+# print(os.environ.get("DB_NAME"))
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
