@@ -1,1 +1,1 @@
-web: gunicorn note_keeper.wsgi
+web: gunicorn note_keeper.wsgi --log-file -
