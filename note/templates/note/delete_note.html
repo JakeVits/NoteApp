@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    p{color: white;}
+    button{
+        padding: 10px 15px;
+        border-radius: 7px;
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+    }
+    .option{margin-top: 10px;}
+    #one{background-color: rgb(96, 173, 177);}
+    #one:hover{background-color: rgb(94, 195, 201);}
+    #two{background-color: rgb(191, 43, 43);}
+    #two:hover{background-color: rgb(220, 59, 59);}
+</style>
+<div class="form-area" style="display: flex; justify-content: center; margin-top: 10%;">
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete {{ note_delete.title }}?</p>
+        <div class="option">
+            <a href="{% url 'note:list-note' %}">
+                <button id="one" type="button">Cancel</button>
+            </a>
+        </div>
+        <div class="option">
+            <button id="two" type="submit">Delete</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="/static/note_list.css">
+{% if note_list %}
+    <div id="grid-container">
+        {% for note in note_list %}
+            <div class="button-area">
+                <p id="title">{{ note.title }}</p>              
+                <a href="{% url 'note:update-note' note.id %}"><button id="edit">Update</button></a>
+                <a href="{% url 'note:delete-note' note.id %}"><button id="delete">Delete</button></a>
+            </div>    
+        {% endfor %}
+    </div>
+{% else %}
+    <h3 id="empty-note">No Note is Available in the Moment!</h3>
+{% endif %}
+{% endblock %}
+
+<!-- <a href="{% url 'note:view-note' note.id %}"><button id="view">View</button></a> -->

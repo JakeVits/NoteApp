@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config
+from django.urls import reverse_lazy
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'note_keeper.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,18 +76,18 @@ WSGI_APPLICATION = 'note_keeper.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dc9idqlnpgggho',
-        "USER": 'ypusodnstircgr',
-        "PASSWORD": 'd0fa6b6d67fc40da942ca0d82cade0b137ee33cb4796df586f80c80625a94a96',
-        "HOST": 'ec2-54-217-15-9.eu-west-1.compute.amazonaws.com',
-        "PORT": 5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'dc9idqlnpgggho',
+    #     "USER": 'ypusodnstircgr',
+    #     "PASSWORD": 'd0fa6b6d67fc40da942ca0d82cade0b137ee33cb4796df586f80c80625a94a96',
+    #     "HOST": 'ec2-54-217-15-9.eu-west-1.compute.amazonaws.com',
+    #     "PORT": 5432
+    # }
 }
 # print(os.environ.get("DB_NAME"))
 # Password validation
@@ -106,7 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+LOGIN_REDIRECT_URL = reverse_lazy('note:list-note')
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -123,6 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'note/static'),
+STATICFILES_DIRS = [BASE_DIR / "static"]
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

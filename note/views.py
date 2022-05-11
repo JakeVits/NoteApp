@@ -1,122 +1,78 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import redirect, render, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Note
 from django.contrib import messages
 from django.views import generic
-from .forms import Note_Form
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
+from .forms import NoteForm
 
 
-class Note_Create(generic.CreateView):
-    template_name = 'note/note_form.html'
-    form_class = Note_Form
-    success_url = reverse_lazy('create')
-    warning_message = ''
-    success_message = 'Note is Successfully Created!'
+class RegView(generic.CreateView):
+    template_name = 'registration/registration.html'
+    form_class = UserCreationForm
 
     def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        # return self.render_to_response(self.get_context_data(request=self.request, form=form))
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        if self.request.POST.get('title'):
-            self.warning_message = 'This Note Exists in the System!'
-        else:
-            self.warning_message = 'Note Title cannot be Empty!'
-        messages.warning(self.request, self.warning_message)
-        return super().form_invalid(form)
+        form.save()
+        user = authenticate(self.request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+        login(self.request, user)
+        return redirect('note:list-note')
 
 
-class Note_View(generic.DetailView):
-    template_name = 'note/note_view.html'
+class NoteCreateView(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('login')
+    template_name = 'note/add_up_note.html'
+    form_class = NoteForm
 
-    def get_queryset(self):
-        return Note.objects.filter(pk=self.kwargs['pk'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['user_view'] = self.get_queryset()
-        return context
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.save()
+        return redirect('note:list-note')
 
 
-class Note_List(generic.ListView):
+# class NoteDetailView(LoginRequiredMixin, generic.DetailView):
+#     login_url = reverse_lazy('login')
+#     template_name = 'note/note_view.html'
+
+#     def get_queryset(self):
+#         return Note.objects.filter(pk=self.kwargs['pk'])
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data()
+#         context['user_view'] = self.get_queryset()
+#         return context
+
+
+class NoteListView(LoginRequiredMixin, generic.ListView):
+    login_url = reverse_lazy('login')
     model = Note
-    template_name = 'note/note_list.html'
+    template_name = 'note/list_note.html'
     context_object_name = 'note_list'
     queryset = Note.objects.order_by('-created_at')
 
+    def get_queryset(self):
+        if self.request.user.is_superuser: return Note.objects.all()
+        return Note.objects.filter(owner=self.request.user)
 
-class Note_Delete(generic.DeleteView):
-    template_name = 'note/delete_confirmation.html'
+
+class NoteDeleteView(LoginRequiredMixin, generic.DeleteView):
+    login_url = reverse_lazy('login')
+    template_name = 'note/delete_note.html'
     model = Note
     context_object_name = 'note_delete'
-    success_url = reverse_lazy('view')
+    success_url = reverse_lazy('note:list-note')
 
 
-class Note_Update(generic.UpdateView):
-    template_name = 'note/note_form.html'
-    context_object_name = 'note_update'
-    form_class = Note_Form
-    warning_message = 'This Note Title is in Used!'
-    success_message = 'Note is Successfully Updated!'
+class NoteUpdateView(LoginRequiredMixin, generic.UpdateView):
+    login_url = reverse_lazy('login')
+    template_name = 'note/add_up_note.html'
+    context_object_name = 'note'
+    form_class = NoteForm
     model = Note
+    success_url = reverse_lazy('note:list-note')
 
-    def form_valid(self, form):
-        title_update = form.cleaned_data['title']
-        dup_title = Note.objects.filter(title=self.request.POST.get('title'))
-        if title_update != self.kwargs['pk'] and dup_title:
-            messages.warning(self.request, self.warning_message)
-            return super().form_invalid(form)
-
-        if self.kwargs['pk'] != title_update:
-            Note.objects.filter(pk=self.kwargs['pk']).delete()
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
-
-# class Note_Delete(generic.DeleteView):
-#     model = Note
-#     template_name = 'note/note_list.html'
-
-# def add_edit_note(request):
-#     note_id = int(request.GET.get('note_id', 0))
-#     note_attribute = Document.objects.all()
-#     if request.method == 'POST':
-#         note_id = int(request.POST.get('note_id', 0))
-#         title = request.POST.get('title')
-#         content = request.POST.get('content')
-#         # to fetch and check if note title exists or not
-#         note_title = Document.objects.filter(title=title)
-#         if note_title and note_id <= 0:
-#             messages.warning(request, 'This Note Title is in Used!')
-#             return render(request, 'note_list.html', {'note_attribute': note_attribute, 'note_id': 0, 'invalid': 'Invalid'})
-#         if title == '':
-#             messages.warning(request, 'Note Title can not be Empty!')
-#             return render(request, 'note_list.html', {'note_attribute': note_attribute, 'note_id': 0, 'invalid': 'Invalid'})
-#         # to handle updates
-#         if note_id > 0:
-#             document = Document.objects.get(pk=note_id)
-#             document.title = title
-#             document.content = content
-#             document.save()
-#             messages.success(request, 'The Note was Successfully Updated!')
-#             return redirect('/?note_id=%i' % note_id)
-#         else:
-#             document = Document.objects.create(title=title, content=content)
-#             messages.success(request, 'The Note was Successfully Created!')
-#             return redirect('/?note_id=%i' % document.id)
-#     if note_id > 0:
-#         document = Document.objects.get(pk=note_id)
-#     else:
-#         document = ''
-#     note = {
-#         'note_id': note_id,
-#         'note_attribute': note_attribute,
-#         'document': document
-#     }
-#     return render(request, 'note_list.html', note)
-
-# delete object in manual method
-# def delete_note(request, title):
-#     document = Note.objects.get(title=title)
-#     document.delete()
-#     return redirect('/')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['update'] = True
+        return context

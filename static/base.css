@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Secular+One&display=swap');
+a:link {
+  text-decoration: none;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    background: rgb(50, 48, 48);
+}
+.navbar-item{
+    color: white;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+#top-link{
+    padding: 10px 0px 0px 20px;
+}
+
+/* .label{
+    margin-top: 2%;
+    color: white;
+    letter-spacing: 1px;
+}
+#content{
+    letter-spacing: 2px;
+}
+.div_date{
+    color: lightyellow;
+    margin-left: 55%;
+}
+#new_note:hover{
+    background-color: rgb(106, 90, 205);
+}
+#return:hover{
+    background-color: rgb(106, 90, 205);
+}
+.my_button{
+    margin-top: 50%;
+}
+#success{
+    padding: 5px;
+} */

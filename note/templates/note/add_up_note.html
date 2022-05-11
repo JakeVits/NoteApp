@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'note_form.css' %}">
+    <div id="form-background">
+        <form method="post">
+            {% csrf_token %}
+            {% if update %}
+                <p style="color: white;">Created Date -> <span>{{note.created_at}}</span></p>
+                <p style="color: white;">Updated Date -> <span>{{note.modified_at}}</span></p>
+            {% endif %}
+            {{form.as_table}}
+            <div class="button-area">
+                <a href="{% url 'note:list-note' %}"><button id="view-btn" type="button">Back</button></a>
+                {% if update %}
+                    <button id="update-btn" type="submit">Update</button>
+                {% else %}
+                    <button id="create-btn" type="submit">Create</button>
+                {% endif %}         
+            </div> 
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'registration/base_form.html' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+{% load static %}
+<link rel="stylesheet" href="/static/login.css">
+<div class="container">       
+    <h1>Z-Notes</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="txt_field">
+            <input name="username" type="text" required>             
+            <span></span>
+            <label>Username</label>
+            <i class="fa fa-user" aria-hidden="true"></i>            
+        </div>
+        <div class="txt_field">
+            <input name="password" type="password" required>
+            <span></span>
+            <label>Password</label>
+            <i class="fa fa-key" id="key" aria-hidden="true"></i>  
+        </div>
+        <input type="submit" value="Login">
+    </form>
+    <div style="text-align: center;">
+        <hr style="width: 80%; margin: 5px auto;">
+        <a class="login-link" href="{% url 'note:registration' %}">Registration</a> 
+    </div>        
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+
+#grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    background-color: rgb(236, 236, 236);
+    margin: 50px 20px 0 20px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+.button-area{
+    margin: auto;
+}
+button{
+    color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}  
+#delete{
+    background-color: rgb(210, 16, 16);
+}
+#view{
+    background-color: #1d9191;
+}
+#edit{
+    background-color: #202099;
+} 
+#delete:hover{
+    background-color: rgb(255, 0, 0);
+}
+#view:hover{
+    background-color: #20b1b1;
+}
+#edit:hover{
+    background-color: #2424cd;
+}
+#empty-note{
+    padding-left: 30%;
+    letter-spacing: 4px;
+    padding-top: 5%;
+    color: white;
+    font-family: 'Courgette', cursive;
+}
+.col{
+    margin-left: -14.5%;
+}
+#title{
+    color: black;
+    opacity: 0.8;
+    text-align: center;
+    letter-spacing: 2px;
+    border-radius: 10px 10px 0px 0px;
+}
+#title_list:hover{
+    text-decoration: none;
+}
